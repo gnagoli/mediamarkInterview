@@ -1,0 +1,417 @@
+openapi: 3.1.0
+info:
+  version: '1.0'
+  title: api
+  summary: MediaMark Interview
+  description: 'Develop application with RESTFul API for managing Products and Categories. '
+  contact:
+    name: dev
+    url: dev
+    email: "dev@medmark.dev"
+  license:
+    url: 'http://dev'
+    name: custom licence
+servers:
+  - url: 'http://localhost:3000'
+    description: product api
+paths:
+  '/products/{productId}':
+    get:
+      tags:
+        - Product
+      summary: get Product by id
+      description: endpoint to retreive product by id
+      operationId: get-product
+      parameters:
+        - name: productId
+          in: path
+          description: the product id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      servers:
+        - url: 'http://localhost:3000'
+          description: product api
+    delete:
+      tags:
+        - Product
+      summary: deleteProduct
+      description: deleteProduct
+      operationId: delete-products
+      parameters:
+        - name: productId
+          in: path
+          description: the product id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: successful operation
+      servers:
+        - url: 'http://localhost:3000'
+          description: product api
+  '/products/{productId}/categorie':
+    get:
+      tags:
+        - Product
+      summary: get categories by product id
+      description: endpoint to retreive product by id
+      operationId: get-product-category
+      parameters:
+        - name: productId
+          in: path
+          description: the product id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      servers:
+        - url: 'http://localhost:3000'
+          description: product api
+  /products:
+    get:
+      tags:
+        - Product
+      summary: get Product list
+      description: endpoint to get product list
+      operationId: get-products
+      parameters:
+        - name: productId
+          in: path
+          description: the product id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      servers:
+        - url: 'http://localhost:3000'
+          description: product api
+    post:
+      tags:
+        - Product
+      summary: saveProduct
+      description: endpoint to save a new product
+      operationId: post-products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      servers:
+        - url: 'http://localhost:3000'
+          description: product api
+    patch:
+      tags:
+        - Product
+      summary: updateProduct
+      description: endpoint to update an existing product
+      operationId: patch-products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      servers:
+        - url: 'http://localhost:3000'
+          description: product api
+  '/categories/{categoryId}':
+    get:
+      tags:
+        - Product
+      summary: get Category by id
+      description: endpoint to retreive category by id
+      operationId: get-category
+      parameters:
+        - name: productId
+          in: path
+          description: the product id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      servers:
+        - url: 'http://localhost:3000'
+          description: product api
+    delete:
+      tags:
+        - Category
+      summary: deleteCategory
+      description: deleteCategory
+      operationId: delete-category
+      parameters:
+        - name: categoryId
+          in: path
+          description: the category id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: successful operation
+      servers:
+        - url: 'http://localhost:3000'
+          description: product api
+  /categories:
+    get:
+      tags:
+        - Category
+      summary: get Categories list
+      description: endpoint to get categories list
+      operationId: get-categories
+      parameters:
+        - name: productId
+          in: path
+          description: the product id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      servers:
+        - url: 'http://localhost:3000'
+          description: product api
+    post:
+      tags:
+        - Category
+      summary: saveProduct
+      description: endpoint to save a new categories
+      operationId: post-categorie
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          description: categorie not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      servers:
+        - url: 'http://localhost:3000'
+          description: product api
+    patch:
+      tags:
+        - Category
+      summary: updateProduct
+      description: endpoint to update an existing categories
+      operationId: patch-categories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          description: categories not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      servers:
+        - url: 'http://localhost:3000'
+          description: product api
+tags:
+  - name: Category
+    description: the categories api
+  - name: Product
+    description: the product api
+components:
+  schemas:
+    Product:
+      type: object
+      title: Product
+      properties:
+        id:
+          type: string
+          description: The product ID.
+        name:
+          type: string
+          description: The product name.
+        parentId:
+          type: string
+          description: The product parent ID.
+      required:
+        - id
+        - name
+        - parentId
+      examples:
+        - id: '202'
+          name: TV & Audio
+          parentId: MediaMarkt_DE
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        errorMessage:
+          type: string
+    Category:
+      type: object
+      properties:
+        name:
+          type: string
+        refCategory:
+          type: array
+          items:
+            type: integer
+        onlineStatus:
+          type: string
+        longDescription:
+          type: string
+        shortDescription:
+          type: string
