@@ -5,8 +5,8 @@ info:
   summary: MediaMark Interview
   description: 'Develop application with RESTFul API for managing Products and Categories. '
   contact:
-    name: dev
-    url: dev
+    name: "dev"
+    url: "http://dev"
     email: "dev@medmark.dev"
   license:
     url: 'http://dev'
@@ -216,7 +216,7 @@ paths:
       description: endpoint to retreive category by id
       operationId: get-category
       parameters:
-        - name: productId
+        - name: categoryId
           in: path
           description: the product id
           required: true
@@ -376,7 +376,7 @@ components:
       type: object
       title: Product
       properties:
-        id:
+        productId:
           type: string
           description: The product ID.
         name:
@@ -403,6 +403,9 @@ components:
     Category:
       type: object
       properties:
+        categoryId:
+          type: string
+          description: The product ID.
         name:
           type: string
         refCategory:
