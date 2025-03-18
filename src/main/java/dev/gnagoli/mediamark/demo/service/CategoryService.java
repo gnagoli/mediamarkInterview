@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import static dev.gnagoli.mediamark.demo.utils.CSVUtils.readCell;
 
@@ -24,7 +25,7 @@ public class CategoryService {
     public List<CategoryEntity> readFromCsv() throws IOException {
         List<CategoryEntity> products = new ArrayList<>();
 
-        FileInputStream file = new FileInputStream(new File("CategoryDataSet.xlsx"));
+        FileInputStream file = new FileInputStream(new File("CategoriesDataSet.xlsx"));
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheetAt(0);
         for (Row cells : sheet) {
@@ -38,19 +39,21 @@ public class CategoryService {
             while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
                 int columnIndex = cell.getColumnIndex();
-                if (columnIndex != 0 && columnIndex != 1 && columnIndex != 3) {
+                if (columnIndex != 0 && columnIndex != 1 && columnIndex != 2) {
                     continue;
                 }
-                String columnName = "";
                 switch (columnIndex) {
                     case 0:
-                        categoryEntity.setId(String.valueOf(readCell(cell)));
+                        var id = Optional.ofNullable(readCell(cell)).map(String::valueOf).map(Double::valueOf).map(Double::intValue).orElse(0);
+                        categoryEntity.setId(id);
                         break;
                     case 1:
                         categoryEntity.setName(String.valueOf(readCell(cell)));
                         break;
-                    case 3:
+                    case 2:
                         categoryEntity.setParentId(String.valueOf(readCell(cell)));
+                        break;
+                    default:
                         break;
                 }
                 products.add(categoryEntity);
@@ -59,9 +62,5 @@ public class CategoryService {
         }
         return products;
     }
-
-
-
-
 
 }

@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 public class CategoryEntity {
 
     @Id
-    private String id;
+    private Integer id;
 
     private String name;
 
@@ -17,11 +17,11 @@ public class CategoryEntity {
     public CategoryEntity() {
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

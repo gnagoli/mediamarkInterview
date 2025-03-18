@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static dev.gnagoli.mediamark.demo.utils.CSVUtils.readCell;
 
@@ -62,19 +59,25 @@ public class ProductService {
             while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
                 int columnIndex = cell.getColumnIndex();
-                if (columnIndex != 0 && columnIndex != 1 && columnIndex != 3) {
-                    continue;
-                }
-                String columnName = "";
                 switch (columnIndex) {
                     case 0:
-                        productEntity.setId(String.valueOf(readCell(cell)));
-                        break;
-                    case 1:
                         productEntity.setName(String.valueOf(readCell(cell)));
                         break;
+                    case 1:
+                        var value = String.valueOf(readCell(cell)).split(";");
+                        var values = Arrays.stream(value).map(Double::valueOf).map(Double::intValue).toList();
+                        productEntity.setRefCategory(values);
+                        break;
+                    case 2:
+                        productEntity.setOnlineStatus(String.valueOf(readCell(cell)));
+                        break;
                     case 3:
-//                        productEntity.setParentId(String.valueOf(readCell(cell)));
+                        productEntity.setLongDescription(String.valueOf(readCell(cell)));
+                        break;
+                    case 4:
+                        productEntity.setShortDescription(String.valueOf(readCell(cell)));
+                        break;
+                    default:
                         break;
                 }
                 products.add(productEntity);

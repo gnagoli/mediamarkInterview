@@ -4,19 +4,25 @@ import org.apache.poi.ss.usermodel.Cell;
 
 public class CSVUtils {
 
-   public static Object readCell(Cell cell) {
+    public static Object readCell(Cell cell) {
+        Object value = "";
         switch (cell.getCellType()) {
             case STRING:
-                return cell.getStringCellValue();
+                value = cell.getStringCellValue();
+                break;
             case NUMERIC:
-                return cell.getNumericCellValue();
+                value = cell.getNumericCellValue();
+                break;
             case BOOLEAN:
-                return cell.getBooleanCellValue();
+                value = cell.getBooleanCellValue();
+                break;
             case FORMULA:
-                return cell.getCellFormula();
+                value = cell.getCellFormula();
+                break;
             default:
-                return "";
+                return value;
         }
+        return value;
     }
 
 }
