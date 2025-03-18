@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
 public class CategoryResource implements CategoriesApi {
-    private final CategoryService CategoryService;
+    private final CategoryService categoryService;
 
-    public CategoryResource(CategoryService CategoryService) {
-        this.CategoryService = CategoryService;
+    public CategoryResource(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
     /**
@@ -36,8 +37,9 @@ public class CategoryResource implements CategoriesApi {
      * @return successful operation (status code 204)
      */
     @Override
-    public ResponseEntity<Void> deleteCategory(String categoryId) {
-        return CategoriesApi.super.deleteCategory(categoryId);
+    public ResponseEntity<Void> deleteCategory(BigDecimal categoryId) {
+        categoryService.deleteCategory(categoryId.longValue());
+        return ResponseEntity.noContent().build();
     }
 
     /**
@@ -50,8 +52,8 @@ public class CategoryResource implements CategoriesApi {
      * or Server Error (status code 500)
      */
     @Override
-    public ResponseEntity<List<Category>> getCategories(String productId) {
-        return CategoriesApi.super.getCategories(productId);
+    public ResponseEntity<List<Category>> getCategories(BigDecimal productId) {
+        return ResponseEntity.ok(categoryService.getProductCategories(productId));
     }
 
     /**
@@ -64,8 +66,12 @@ public class CategoryResource implements CategoriesApi {
      * or Server Error (status code 500)
      */
     @Override
-    public ResponseEntity<Category> getCategory(String categoryId) {
-        return CategoriesApi.super.getCategory(categoryId);
+    public ResponseEntity<Category> getCategory(BigDecimal categoryId) {
+        var category = categoryService.getCategory(categoryId);
+        if (category.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.of(category);
     }
 
     /**
@@ -79,7 +85,7 @@ public class CategoryResource implements CategoriesApi {
      */
     @Override
     public ResponseEntity<Category> patchCategories(Category category) {
-        return CategoriesApi.super.patchCategories(category);
+        return ResponseEntity.ok(categoryService.patchCategories(category));
     }
 
     /**
@@ -93,11 +99,11 @@ public class CategoryResource implements CategoriesApi {
      */
     @Override
     public ResponseEntity<Category> postCategorie(Category category) {
-        return CategoriesApi.super.postCategorie(category);
+        return ResponseEntity.ok(categoryService.save(category));
     }
 
     @GetMapping("categories/data")
     public List<CategoryEntity> fromCSV() throws IOException {
-        return CategoryService.readFromCsv();
+        return categoryService.readFromCsv();
     }
 }

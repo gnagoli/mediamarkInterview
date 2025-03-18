@@ -8,9 +8,11 @@ import org.mapstruct.*;
 public interface CategoryMapper {
 
     @Mapping(target = "id", source = "categoryId")
-    CategoryEntity toCategory(Category category);
+    CategoryEntity toEntity(Category category);
 
     @Mapping(target = "categoryId", source = "id")
-    Category toEntity(CategoryEntity categoryEntity);
+    Category toCategory(CategoryEntity categoryEntity);
+
+   void patchCategory(Category category,  @MappingTarget  CategoryEntity categoryEntity);
 
 }

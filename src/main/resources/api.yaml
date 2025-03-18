@@ -33,7 +33,8 @@ paths:
           description: the product id
           required: true
           schema:
-            type: string
+            type: number
+            format: int64
       responses:
         '200':
           description: successful operation
@@ -68,7 +69,8 @@ paths:
           description: the product id
           required: true
           schema:
-            type: string
+            type: number
+            format: int64
       responses:
         '204':
           description: successful operation
@@ -88,7 +90,8 @@ paths:
           description: the product id
           required: true
           schema:
-            type: string
+            type: number
+            format: int64
       responses:
         '200':
           description: successful operation
@@ -230,7 +233,8 @@ paths:
           description: the product id
           required: true
           schema:
-            type: string
+            type: number
+            format: int64
       responses:
         '200':
           description: successful operation
@@ -265,7 +269,8 @@ paths:
           description: the category id
           required: true
           schema:
-            type: string
+            type: number
+            format: int64
       responses:
         '204':
           description: successful operation
@@ -285,7 +290,8 @@ paths:
           description: the product id
           required: true
           schema:
-            type: string
+            type: number
+            format: int64
       responses:
         '200':
           description: successful operation
@@ -384,7 +390,8 @@ components:
       title: Product
       properties:
         categoryId:
-          type: string
+          type: number
+          format: int64
           description: The product ID.
         name:
           type: string
@@ -411,7 +418,8 @@ components:
       type: object
       properties:
         productId:
-          type: string
+          type: number
+          format: int64
           description: The product ID.
         name:
           type: string

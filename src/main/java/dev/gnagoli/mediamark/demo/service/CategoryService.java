@@ -2,6 +2,9 @@ package dev.gnagoli.mediamark.demo.service;
 
 
 import dev.gnagoli.mediamark.demo.domain.CategoryEntity;
+import dev.gnagoli.mediamark.demo.mapper.CategoryMapper;
+import dev.gnagoli.mediamark.demo.repository.CategoryRepository;
+import dev.gnagoli.mediamark.openapi.model.Category;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,7 +25,31 @@ import static dev.gnagoli.mediamark.demo.utils.CSVUtils.readCell;
 @Service
 public class CategoryService {
 
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
+    public CategoryService(CategoryRepository categoryRepository,
+                           CategoryMapper categoryMapper) {
+        this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
+    }
+
+    /**
+     * Delete existing categories
+     *
+     * @param categoryId the categorie Id
+     */
+    public void deleteCategory(Long categoryId) {
+        categoryRepository.deleteById(categoryId);
+    }
+
+
+    /**
+     * Read categories from csv
+     *
+     * @return
+     * @throws IOException
+     */
     public List<CategoryEntity> readFromCsv() throws IOException {
         List<CategoryEntity> products = new ArrayList<>();
 
@@ -61,6 +89,50 @@ public class CategoryService {
 
         }
         return products;
+    }
+
+    /**
+     * Get product categories
+     *
+     * @param productId
+     * @return
+     */
+    public List<Category> getProductCategories(BigDecimal productId) {
+        return categoryRepository.findCategoryEntitiesByProductId(productId.longValue());
+    }
+
+    /**
+     * Get categories
+     *
+     * @param categoryId
+     * @return
+     */
+    public Optional<Category> getCategory(BigDecimal categoryId) {
+        return categoryRepository.findById(categoryId.longValue()).map(categoryMapper::toCategory);
+    }
+
+
+    /**
+     * update existing categories
+     *
+     * @param category
+     * @return
+     */
+    public Category patchCategories(Category category) {
+        var existingCategory = categoryRepository.findById(category.getCategoryId().longValue()).orElseThrow();
+        categoryMapper.patchCategory(category, existingCategory);
+        return categoryMapper.toCategory(categoryRepository.save(existingCategory));
+    }
+
+    /**
+     * save categories
+     *
+     * @param category
+     * @return
+     */
+    public Category save(Category category) {
+        var saved = categoryRepository.save(categoryMapper.toEntity(category));
+        return categoryMapper.toCategory(saved);
     }
 
 }
