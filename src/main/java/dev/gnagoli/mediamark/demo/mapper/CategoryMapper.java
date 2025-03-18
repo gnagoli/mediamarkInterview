@@ -2,12 +2,9 @@ package dev.gnagoli.mediamark.demo.mapper;
 
 import dev.gnagoli.mediamark.demo.domain.CategoryEntity;
 import dev.gnagoli.mediamark.openapi.model.Category;
-import org.mapstruct.Builder;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, builder = @Builder(disableBuilder = true))
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true))
 public interface CategoryMapper {
 
     @Mapping(target = "id", source = "categoryId")

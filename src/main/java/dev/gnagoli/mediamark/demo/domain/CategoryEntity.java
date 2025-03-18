@@ -1,18 +1,10 @@
 package dev.gnagoli.mediamark.demo.domain;
 
 
-
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Data
 public class CategoryEntity {
 
     @Id
@@ -20,13 +12,32 @@ public class CategoryEntity {
 
     private String name;
 
-    @ElementCollection
-    @CollectionTable(name = "ref_category")
-    private List<Integer> refCategory = new ArrayList<>();
+    private String parentId;
 
-    private String onlineStatus;
+    public CategoryEntity() {
+    }
 
-    private String longDescription;
+    public String getId() {
+        return id;
+    }
 
-    private String shortDescription;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 }

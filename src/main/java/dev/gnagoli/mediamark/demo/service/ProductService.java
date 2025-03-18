@@ -20,6 +20,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import static dev.gnagoli.mediamark.demo.utils.CSVUtils.readCell;
+
 @Service
 public class ProductService {
 
@@ -66,37 +68,21 @@ public class ProductService {
                 String columnName = "";
                 switch (columnIndex) {
                     case 0:
-                        productEntity.setId(cell.getStringCellValue());
+                        productEntity.setId(String.valueOf(readCell(cell)));
                         break;
                     case 1:
-                        productEntity.setName(cell.getStringCellValue());
+                        productEntity.setName(String.valueOf(readCell(cell)));
                         break;
                     case 3:
-                        productEntity.setParentId(cell.getStringCellValue());
+//                        productEntity.setParentId(String.valueOf(readCell(cell)));
                         break;
                 }
                 products.add(productEntity);
-
-
             }
 
         }
         return products;
     }
 
-    Object readCell(Cell cell) {
-        switch (cell.getCellType()) {
-            case STRING:
-                return cell.getStringCellValue();
-            case NUMERIC:
-                return cell.getNumericCellValue();
-            case BOOLEAN:
-                return cell.getBooleanCellValue();
-            case FORMULA:
-                return cell.getCellFormula();
-            default:
-                return "";
-        }
-    }
 
 }

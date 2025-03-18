@@ -17,7 +17,7 @@ public class ProductResource {
         this.productService = productService;
     }
 
-    @GetMapping
+    @GetMapping("product/data")
     public List<ProductEntity> fromCSV() throws IOException {
         return productService.readFromCsv();
     }

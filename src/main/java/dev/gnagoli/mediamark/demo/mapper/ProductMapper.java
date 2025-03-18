@@ -3,12 +3,9 @@ package dev.gnagoli.mediamark.demo.mapper;
 
 import dev.gnagoli.mediamark.demo.domain.ProductEntity;
 import dev.gnagoli.mediamark.openapi.model.Product;
-import org.mapstruct.Builder;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, builder = @Builder(disableBuilder = true))
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR, builder = @Builder(disableBuilder = true))
 public interface ProductMapper {
 
     @Mapping(target = "id", source = "productId")

@@ -372,7 +372,7 @@ tags:
     description: the product api
 components:
   schemas:
-    Product:
+    Category:
       type: object
       title: Product
       properties:
@@ -400,7 +400,7 @@ components:
           type: integer
         errorMessage:
           type: string
-    Category:
+    Product:
       type: object
       properties:
         categoryId:
