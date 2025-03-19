@@ -33,6 +33,12 @@ public class ProductService {
         this.productMapper = productMapper;
     }
 
+    /**
+     * Find a product by id
+     *
+     * @param id the id of the product
+     * @return the product
+     */
     public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id).map(productMapper::toProduct);
     }
@@ -43,6 +49,12 @@ public class ProductService {
     }
 
 
+    /**
+     * Read product data from csv
+     *
+     * @return the list of data
+     * @throws IOException
+     */
     public List<ProductEntity> readFromCsv() throws IOException {
         List<ProductEntity> products = new ArrayList<>();
 
@@ -88,14 +100,32 @@ public class ProductService {
         return products;
     }
 
+    /**
+     * Delete an existing product by id
+     *
+     * @param productId the product id
+     */
     public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
     }
 
+    /**
+     * Get product list from database
+     *
+     * @param page the current page
+     * @param size the size of every page
+     * @return the list of products
+     */
     public List<Product> getProducts(int page, int size) {
         return productRepository.findAll(PageRequest.of(page, size)).map(productMapper::toProduct).getContent();
     }
 
+    /**
+     * Update an existing product
+     *
+     * @param product the product data
+     * @return updated product
+     */
     public Product updateProducts(Product product) {
         var existingProduct = productRepository.findById(product.getProductId()).orElseThrow();
         productMapper.patchProduct(product, existingProduct);

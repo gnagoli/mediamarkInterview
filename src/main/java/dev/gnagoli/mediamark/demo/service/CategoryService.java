@@ -40,7 +40,7 @@ public class CategoryService {
     /**
      * Delete existing categories
      *
-     * @param categoryId the categorie Id
+     * @param categoryId the category Id
      */
     public void deleteCategory(Long categoryId) {
         categoryRepository.deleteById(categoryId);
@@ -50,7 +50,7 @@ public class CategoryService {
     /**
      * Read categories from csv
      *
-     * @return
+     * @return the list of categories
      * @throws IOException
      */
     public List<CategoryEntity> readFromCsv() throws IOException {
@@ -98,8 +98,8 @@ public class CategoryService {
     /**
      * Get product categories
      *
-     * @param productId
-     * @return
+     * @param productId the id of the product
+     * @return the list of categories
      */
     public List<Category> getProductCategories(Long productId) {
         var categories = categoryRepository.findCategoryEntitiesByProductId(productId);
@@ -107,10 +107,10 @@ public class CategoryService {
     }
 
     /**
-     * Get categories
+     * Get categories by id
      *
-     * @param categoryId
-     * @return
+     * @param categoryId the id of the category
+     * @return the category
      */
     public Optional<Category> getCategory(Long categoryId) {
         return categoryRepository.findById(categoryId)
@@ -121,8 +121,8 @@ public class CategoryService {
     /**
      * update existing categories
      *
-     * @param category
-     * @return
+     * @param category the category to update
+     * @return updated category
      */
     public Category updateCategories(Category category) {
         var existingCategory = categoryRepository.findById(category.getCategoryId()).orElseThrow();
@@ -131,9 +131,9 @@ public class CategoryService {
     }
 
     /**
-     * save categories
+     * create categories
      *
-     * @param category
+     * @param category the category to create
      * @return
      */
     public Category save(Category category) {
@@ -141,6 +141,13 @@ public class CategoryService {
         return categoryMapper.toCategory(saved);
     }
 
+    /**
+     * Get a paginated list of categories
+     *
+     * @param page the current page
+     * @param size the size of pages
+     * @return the list of categories
+     */
     public List<Category> getCategories(int page, int size) {
         return categoryRepository.findAll(PageRequest.of(page, size))
                 .map(categoryMapper::toCategory)
