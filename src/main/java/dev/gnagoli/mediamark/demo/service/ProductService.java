@@ -11,8 +11,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
@@ -20,6 +21,7 @@ import java.util.*;
 import static dev.gnagoli.mediamark.demo.utils.CSVUtils.readCell;
 
 @Service
+@Transactional
 public class ProductService {
 
 
@@ -82,7 +84,7 @@ public class ProductService {
                 products.add(productEntity);
             }
         }
-//        productRepository.saveAll(products);
+        productRepository.saveAll(products);
         return products;
     }
 

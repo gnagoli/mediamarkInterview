@@ -11,7 +11,7 @@ public class CategoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column()
+    @Column(columnDefinition = "TEXT")
     @Lob
     private String name;
 

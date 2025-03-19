@@ -10,11 +10,11 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> 
 
 
     @Query(value = """ 
-            select *
+            select categories.*
                         from categories
                         where categories.id in (select ref_category
                                                 from products
-                                                         left join public.ref_category_table rct on products.id = rct.product_entity_id
+                                                         left join ref_category_table rct on products.id = rct.product_entity_id
                                               where product_entity_id = ?1)
             """, nativeQuery = true)
     List<CategoryEntity> findCategoryEntitiesByProductId(Long productId);

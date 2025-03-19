@@ -11,6 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 import static dev.gnagoli.mediamark.demo.utils.CSVUtils.readCell;
 
 @Service
+@Transactional
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
@@ -89,7 +91,7 @@ public class CategoryService {
             }
 
         }
-//        categoryRepository.saveAll(categoryEntities);
+        categoryRepository.saveAll(categoryEntities);
         return categoryEntities;
     }
 
