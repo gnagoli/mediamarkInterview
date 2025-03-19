@@ -6,7 +6,6 @@ import dev.gnagoli.mediamark.demo.mapper.ProductMapper;
 import dev.gnagoli.mediamark.demo.repository.ProductRepository;
 import dev.gnagoli.mediamark.openapi.model.Product;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -22,7 +21,6 @@ import static dev.gnagoli.mediamark.demo.utils.CSVUtils.readCell;
 @Service
 public class ProductService {
 
-    DataFormatter fmt = new DataFormatter();
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
@@ -66,7 +64,7 @@ public class ProductService {
                     case 1:
                         var value = String.valueOf(readCell(cell)).split(";");
                         var values = Arrays.stream(value).map(Double::valueOf).map(Double::intValue).toList();
-                        productEntity.setRefCategory(values);
+                        productEntity.setRefCategory(new ArrayList<>(values));
                         break;
                     case 2:
                         productEntity.setOnlineStatus(String.valueOf(readCell(cell)));
@@ -82,20 +80,8 @@ public class ProductService {
                 }
                 products.add(productEntity);
             }
-
         }
-
-        var p = products.getFirst();
-        productRepository.save(p);
-
-//        for (ProductEntity productEntity : products) {
-//            try {
-//                productRepository.save(productEntity);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-
+        productRepository.saveAll(products);
         return products;
     }
 
