@@ -9,6 +9,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -86,4 +88,7 @@ public class ProductService {
     }
 
 
+    public Page<Product> getAllProducts(Integer page, Integer pageSize) {
+        return productRepository.findAll(PageRequest.of(page, pageSize)).map(productMapper::toProduct);
+    }
 }

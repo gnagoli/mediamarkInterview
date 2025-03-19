@@ -123,13 +123,21 @@ paths:
       summary: get Product list
       description: endpoint to get product list
       operationId: get-products
-      #      parameters:
-      #        - name: productId
-      #          in: path
-      #          description: the product id
-      #          required: true
-      #          schema:
-      #            type: string
+      parameters:
+        - name: page
+          in: query
+          description: the current page
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: size
+          in: query
+          description: the current page
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         '200':
           description: successful operation
@@ -285,13 +293,26 @@ paths:
       description: endpoint to get categories list
       operationId: get-categories
       parameters:
-        - name: productId
-          in: path
-          description: the product id
+        - name: page
+          in: query
+          description: the current page
           required: true
           schema:
             type: integer
-            format: int64
+        - name: size
+          in: query
+          description: the current page
+          required: true
+          schema:
+            type: integer
+#      parameters:
+#        - name: productId
+#          in: path
+#          description: the product id
+#          required: true
+#          schema:
+#            type: integer
+#            format: int64
       responses:
         '200':
           description: successful operation
@@ -352,7 +373,7 @@ paths:
     patch:
       tags:
         - Category
-      summary: updateProduct
+      summary: updateCategory
       description: endpoint to update an existing categories
       operationId: patch-categories
       requestBody:

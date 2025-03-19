@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -99,7 +100,7 @@ public class CategoryService {
      */
     public List<Category> getProductCategories(Long productId) {
 //        return categoryRepository.findCategoryEntitiesByProductId(productId.longValue());
-      return  null;
+        return null;
     }
 
     /**
@@ -109,7 +110,8 @@ public class CategoryService {
      * @return
      */
     public Optional<Category> getCategory(Long categoryId) {
-        return categoryRepository.findById(categoryId).map(categoryMapper::toCategory);
+        return categoryRepository.findById(categoryId)
+                .map(categoryMapper::toCategory);
     }
 
 
@@ -119,8 +121,8 @@ public class CategoryService {
      * @param category
      * @return
      */
-    public Category patchCategories(Category category) {
-        var existingCategory = categoryRepository.findById(category.getCategoryId().longValue()).orElseThrow();
+    public Category updateCategories(Category category) {
+        var existingCategory = categoryRepository.findById(category.getCategoryId()).orElseThrow();
         categoryMapper.patchCategory(category, existingCategory);
         return categoryMapper.toCategory(categoryRepository.save(existingCategory));
     }
@@ -136,4 +138,9 @@ public class CategoryService {
         return categoryMapper.toCategory(saved);
     }
 
+    public List<Category> getCategories(int page, int size) {
+        return categoryRepository.findAll(PageRequest.of(page, size))
+                .map(categoryMapper::toCategory)
+                .getContent();
+    }
 }

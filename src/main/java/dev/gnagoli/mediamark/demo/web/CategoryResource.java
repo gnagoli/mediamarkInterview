@@ -3,7 +3,6 @@ package dev.gnagoli.mediamark.demo.web;
 import dev.gnagoli.mediamark.demo.domain.CategoryEntity;
 import dev.gnagoli.mediamark.demo.service.CategoryService;
 import dev.gnagoli.mediamark.openapi.api.CategoriesApi;
-import dev.gnagoli.mediamark.openapi.api.CategoriesApiDelegate;
 import dev.gnagoli.mediamark.openapi.model.Category;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,13 +19,6 @@ public class CategoryResource implements CategoriesApi {
         this.categoryService = categoryService;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public CategoriesApiDelegate getDelegate() {
-        return CategoriesApi.super.getDelegate();
-    }
 
     /**
      * DELETE /categories/{categoryId} : deleteCategory
@@ -45,14 +37,15 @@ public class CategoryResource implements CategoriesApi {
      * GET /categories : get Categories list
      * endpoint to get categories list
      *
-     * @param productId the product id (required)
+     * @param page the current page (required)
+     * @param size the current page (required)
      * @return successful operation (status code 200)
      * or product not found (status code 400)
      * or Server Error (status code 500)
      */
     @Override
-    public ResponseEntity<List<Category>> getCategories(Long productId) {
-        return ResponseEntity.ok(categoryService.getProductCategories(productId));
+    public ResponseEntity<List<Category>> getCategories(Integer page, Integer size) {
+        return ResponseEntity.ok(categoryService.getCategories(page, size));
     }
 
     /**
@@ -67,14 +60,12 @@ public class CategoryResource implements CategoriesApi {
     @Override
     public ResponseEntity<Category> getCategory(Long categoryId) {
         var category = categoryService.getCategory(categoryId);
-        if (category.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.of(category);
+        return category.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     /**
-     * PATCH /categories : updateProduct
+     * PATCH /categories : updateCategory
      * endpoint to update an existing categories
      *
      * @param category (optional)
@@ -84,7 +75,7 @@ public class CategoryResource implements CategoriesApi {
      */
     @Override
     public ResponseEntity<Category> patchCategories(Category category) {
-        return ResponseEntity.ok(categoryService.patchCategories(category));
+        return ResponseEntity.ok(categoryService.updateCategories(category));
     }
 
     /**
