@@ -1,15 +1,18 @@
 package dev.gnagoli.mediamark.demo.domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "CATEGORIES")
 public class CategoryEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column()
+    @Lob
     private String name;
 
     private String parentId;

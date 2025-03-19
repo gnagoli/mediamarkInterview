@@ -1,40 +1,43 @@
 package dev.gnagoli.mediamark.demo.domain;
 
 
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "PRODUCTS")
 public class ProductEntity {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
 
     @ElementCollection
-    @CollectionTable(name = "ref_category")
+    @CollectionTable(name = "ref_category_table")
     private List<Integer> refCategory = new ArrayList<>();
 
     private String onlineStatus;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String longDescription;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String shortDescription;
 
     public ProductEntity() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

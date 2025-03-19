@@ -84,6 +84,18 @@ public class ProductService {
             }
 
         }
+
+        var p = products.getFirst();
+        productRepository.save(p);
+
+//        for (ProductEntity productEntity : products) {
+//            try {
+//                productRepository.save(productEntity);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+
         return products;
     }
 

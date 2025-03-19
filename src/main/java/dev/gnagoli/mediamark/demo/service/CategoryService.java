@@ -51,7 +51,7 @@ public class CategoryService {
      * @throws IOException
      */
     public List<CategoryEntity> readFromCsv() throws IOException {
-        List<CategoryEntity> products = new ArrayList<>();
+        List<CategoryEntity> categoryEntities = new ArrayList<>();
 
         FileInputStream file = new FileInputStream(new File("CategoriesDataSet.xlsx"));
         XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -84,11 +84,12 @@ public class CategoryService {
                     default:
                         break;
                 }
-                products.add(categoryEntity);
+                categoryEntities.add(categoryEntity);
             }
 
         }
-        return products;
+        categoryRepository.saveAll(categoryEntities);
+        return categoryEntities;
     }
 
     /**
@@ -98,7 +99,8 @@ public class CategoryService {
      * @return
      */
     public List<Category> getProductCategories(BigDecimal productId) {
-        return categoryRepository.findCategoryEntitiesByProductId(productId.longValue());
+//        return categoryRepository.findCategoryEntitiesByProductId(productId.longValue());
+      return  null;
     }
 
     /**
