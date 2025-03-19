@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -98,7 +97,7 @@ public class CategoryService {
      * @param productId
      * @return
      */
-    public List<Category> getProductCategories(BigDecimal productId) {
+    public List<Category> getProductCategories(Long productId) {
 //        return categoryRepository.findCategoryEntitiesByProductId(productId.longValue());
       return  null;
     }
@@ -109,8 +108,8 @@ public class CategoryService {
      * @param categoryId
      * @return
      */
-    public Optional<Category> getCategory(BigDecimal categoryId) {
-        return categoryRepository.findById(categoryId.longValue()).map(categoryMapper::toCategory);
+    public Optional<Category> getCategory(Long categoryId) {
+        return categoryRepository.findById(categoryId).map(categoryMapper::toCategory);
     }
 
 

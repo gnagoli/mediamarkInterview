@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -37,8 +36,8 @@ public class CategoryResource implements CategoriesApi {
      * @return successful operation (status code 204)
      */
     @Override
-    public ResponseEntity<Void> deleteCategory(BigDecimal categoryId) {
-        categoryService.deleteCategory(categoryId.longValue());
+    public ResponseEntity<Void> deleteCategory(Long categoryId) {
+        categoryService.deleteCategory(categoryId);
         return ResponseEntity.noContent().build();
     }
 
@@ -52,7 +51,7 @@ public class CategoryResource implements CategoriesApi {
      * or Server Error (status code 500)
      */
     @Override
-    public ResponseEntity<List<Category>> getCategories(BigDecimal productId) {
+    public ResponseEntity<List<Category>> getCategories(Long productId) {
         return ResponseEntity.ok(categoryService.getProductCategories(productId));
     }
 
@@ -66,7 +65,7 @@ public class CategoryResource implements CategoriesApi {
      * or Server Error (status code 500)
      */
     @Override
-    public ResponseEntity<Category> getCategory(BigDecimal categoryId) {
+    public ResponseEntity<Category> getCategory(Long categoryId) {
         var category = categoryService.getCategory(categoryId);
         if (category.isEmpty()) {
             return ResponseEntity.notFound().build();
