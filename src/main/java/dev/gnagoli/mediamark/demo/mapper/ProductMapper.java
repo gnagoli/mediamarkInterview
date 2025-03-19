@@ -14,4 +14,5 @@ public interface ProductMapper {
     @Mapping(target = "productId", source = "id")
     Product toProduct(ProductEntity productEntity);
 
+    void patchProduct(Product product, @MappingTarget ProductEntity existingProduct);
 }

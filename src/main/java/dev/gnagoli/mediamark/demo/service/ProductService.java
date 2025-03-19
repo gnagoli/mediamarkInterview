@@ -9,7 +9,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -32,13 +31,13 @@ public class ProductService {
         this.productMapper = productMapper;
     }
 
-    public Optional<ProductEntity> getProductById(Long id) {
-        return productRepository.findById(id);
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id).map(productMapper::toProduct);
     }
 
-    public ProductEntity saveProduct(Product product) {
+    public Product saveProduct(Product product) {
         var productEntity = productMapper.toProductEntity(product);
-        return productRepository.save(productEntity);
+        return productMapper.toProduct(productRepository.save(productEntity));
     }
 
 
@@ -87,8 +86,17 @@ public class ProductService {
         return products;
     }
 
+    public void deleteProduct(Long productId) {
+        productRepository.deleteById(productId);
+    }
 
-    public Page<Product> getAllProducts(Integer page, Integer pageSize) {
-        return productRepository.findAll(PageRequest.of(page, pageSize)).map(productMapper::toProduct);
+    public List<Product> getProducts(int page, int size) {
+        return productRepository.findAll(PageRequest.of(page, size)).map(productMapper::toProduct).getContent();
+    }
+
+    public Product updateProducts(Product product) {
+        var existingProduct = productRepository.findById(product.getProductId()).orElseThrow();
+        productMapper.patchProduct(product, existingProduct);
+        return productMapper.toProduct(productRepository.save(existingProduct));
     }
 }
