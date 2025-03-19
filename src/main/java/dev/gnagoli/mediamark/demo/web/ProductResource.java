@@ -1,6 +1,7 @@
 package dev.gnagoli.mediamark.demo.web;
 
 import dev.gnagoli.mediamark.demo.domain.ProductEntity;
+import dev.gnagoli.mediamark.demo.service.CategoryService;
 import dev.gnagoli.mediamark.demo.service.ProductService;
 import dev.gnagoli.mediamark.openapi.api.ProductsApi;
 import dev.gnagoli.mediamark.openapi.model.Category;
@@ -15,10 +16,11 @@ import java.util.List;
 @RestController
 public class ProductResource implements ProductsApi {
     private final ProductService productService;
+    private final CategoryService categoryService;
 
-
-    public ProductResource(ProductService productService) {
+    public ProductResource(ProductService productService, CategoryService categoryService) {
         this.productService = productService;
+        this.categoryService = categoryService;
     }
 
     /**
@@ -61,7 +63,8 @@ public class ProductResource implements ProductsApi {
      */
     @Override
     public ResponseEntity<List<Category>> getProductCategory(Long productId) {
-        return ResponseEntity.ok().build();
+       var categories = categoryService.getProductCategories(productId);
+        return ResponseEntity.ok(categories);
     }
 
     /**

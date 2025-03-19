@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static dev.gnagoli.mediamark.demo.utils.CSVUtils.readCell;
 
@@ -99,8 +100,8 @@ public class CategoryService {
      * @return
      */
     public List<Category> getProductCategories(Long productId) {
-//        return categoryRepository.findCategoryEntitiesByProductId(productId.longValue());
-        return null;
+        var categories = categoryRepository.findCategoryEntitiesByProductId(productId);
+        return categories.parallelStream().map(categoryMapper::toCategory).collect(Collectors.toList());
     }
 
     /**

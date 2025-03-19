@@ -77,7 +77,7 @@ paths:
       servers:
         - url: 'http://localhost:3000'
           description: product api
-  '/products/{productId}/categorie':
+  '/products/{productId}/categories':
     get:
       tags:
         - Category
