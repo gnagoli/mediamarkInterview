@@ -88,7 +88,7 @@ public class CategoryService {
             }
 
         }
-        categoryRepository.saveAll(categoryEntities);
+//        categoryRepository.saveAll(categoryEntities);
         return categoryEntities;
     }
 

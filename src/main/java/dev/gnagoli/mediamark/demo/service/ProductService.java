@@ -44,7 +44,7 @@ public class ProductService {
     public List<ProductEntity> readFromCsv() throws IOException {
         List<ProductEntity> products = new ArrayList<>();
 
-        FileInputStream file = new FileInputStream(new File("ProductsDataSet.xlsx"));
+        FileInputStream file = new FileInputStream("ProductsDataSet.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheetAt(0);
         for (Row cells : sheet) {
@@ -82,7 +82,7 @@ public class ProductService {
                 products.add(productEntity);
             }
         }
-        productRepository.saveAll(products);
+//        productRepository.saveAll(products);
         return products;
     }
 
